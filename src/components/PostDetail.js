@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGetPostsQuery } from "../app/services/api";
+import styles from "../index.module.css";
 
 function PostDetail() {
   const { postId } = useParams();
@@ -21,11 +22,11 @@ function PostDetail() {
   }
 
   return (
-    <div>
-      <h1>Полная информация о посте</h1>
-      <h2>{post.title}</h2>
-      <p>{post.body}</p>
-      <Link to="/">Назад</Link>
+    <div className={styles.container}>
+      <h1 className={styles.postsTitle}>Полная информация о посте</h1>
+      <h2 className={styles.postTitle}>{post.title}</h2>
+      <p className={styles.postDescription}>{post.body}</p>
+      <Link to="/" className={styles.postBackButton}>Назад</Link>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import styles from "../index.module.css";
 
 function PostList() {
   const [posts, setPosts] = useState([]);
@@ -36,6 +37,7 @@ function PostList() {
                 setLoadingMore(false);
               })
               .catch((error) => {
+                alert('"Произошла ошибка при загрузке данных:", error');
                 console.error("Произошла ошибка при загрузке данных:", error);
                 setLoadingMore(false);
               });
@@ -59,18 +61,22 @@ function PostList() {
   }, [loadingMore, page, hasMorePosts]);
 
   return (
-    <div>
-      <h1>Список постов</h1>
-      <ul>
+    <div className={styles.container}>
+      <h1 className={styles.postsTitle}>Список постов</h1>
+      <ul className={`${styles.listReset} ${styles.postsList}`}>
         {posts.map((post) => (
-          <li key={post.id}>
-            <h2>{post.title}</h2>
-            <p>{post.body.slice(0, 100)}...</p>
-            <Link to={`/post/${post.id}`}>Просмотр</Link>
+          <li key={post.id} className={styles.postsItem}>
+            <h2 className={styles.postTitle}>{post.title}</h2>
+            <p className={styles.postDescription}>
+              {post.body.slice(0, 90)}...
+            </p>
+            <Link to={`/post/${post.id}`} className={styles.postViewButton}>
+              Просмотр
+            </Link>
           </li>
         ))}
       </ul>
-      {/* {!hasMorePosts && <div>Посты закончились</div>} */}
+
       {loadingMore && <div>Загрузка...</div>}
       <div ref={bottomOfListRef}></div>
     </div>
