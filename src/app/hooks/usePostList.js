@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify"; // Импортируйте toast
+import { toast } from "react-toastify";
+import axios from "axios";
 
 function usePostList() {
   // Состояния для хранения данных о постах, статусе загрузки, текущей странице и ошибке
   const [posts, setPosts] = useState([]);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMorePosts, setHasMorePosts] = useState(true);
-  const [errorOccurred, setErrorOccurred] = useState(false); 
-
-  // Состояние для отслеживания времени отображения лоадера
+  const [errorOccurred, setErrorOccurred] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
 
   // Ref для отслеживания нижней границы списка
@@ -21,22 +20,21 @@ function usePostList() {
     // Функция, выполняющая загрузку дополнительных постов при достижении нижней границы
     const loadMorePosts = () => {
       // Проверяем, что есть ещё посты для загрузки и не выполняется другая загрузка и не произошла ошибка
-      if (hasMorePosts && !loadingMore && !errorOccurred) {
-        setLoadingMore(true);
-
-        // Устанавливаем флаг для отображения лоадера
+      if (hasMorePosts && !loading && !errorOccurred) {
+        setLoading(true);
         setShowLoader(true);
 
-        // Отображаем лоадер минимум через 1 секунду
+        // для отображения loader, что бы не смотрелся как артефакт
         setTimeout(() => {
-          // Запрашиваем дополнительные посты с сервера
-          fetch(
-            `https://jsonplaceholder.typicode.com/posts?_page=${
-              page + 1
-            }&_limit=10`
-          )
-            .then((response) => response.json())
-            .then((newPosts) => {
+          // Запрашиваем дополнительные посты с сервера с использованием Axios
+          axios
+            .get(
+              `https://jsonplaceholder.typicode.com/posts?_page=${
+                page + 1
+              }&_limit=10`
+            )
+            .then((response) => {
+              const newPosts = response.data;
               if (newPosts.length === 0) {
                 // Если новых постов нет, устанавливаем флаг hasMorePosts в false
                 setHasMorePosts(false);
@@ -45,20 +43,19 @@ function usePostList() {
                 setPosts((prevPosts) => [...prevPosts, ...newPosts]);
                 setPage(page + 1);
               }
-              setLoadingMore(false);
-              // Скрываем лоадер после завершения загрузки
+              setLoading(false);
               setShowLoader(false);
             })
             .catch((error) => {
               console.error("Произошла ошибка при загрузке данных:", error);
-              setLoadingMore(false);
+              setLoading(false);
 
               // toast.error для отображения ошибки
               toast.error(
                 "Произошла ошибка при загрузке данных: " + error.message
               );
 
-              // Устаноавливаем флаг ошибки
+              // Устанавливаем флаг ошибки
               setErrorOccurred(true);
               // Скрываем лоадер после ошибки
               setShowLoader(false);
@@ -90,10 +87,10 @@ function usePostList() {
         observer.unobserve(bottomOfList);
       }
     };
-  }, [loadingMore, page, hasMorePosts, errorOccurred]);
+  }, [loading, page, hasMorePosts, errorOccurred]);
 
   // Возвращаем данные и функции для использования в компоненте
-  return { posts, loadingMore, bottomOfListRef, showLoader };
+  return { posts, loading, bottomOfListRef, showLoader };
 }
 
 export default usePostList;

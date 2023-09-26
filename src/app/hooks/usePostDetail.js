@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 function usePostList() {
   // Состояния для хранения данных о постах, статуса загрузки и ошибки
@@ -9,10 +10,11 @@ function usePostList() {
 
   // Используем useEffect для выполнения запроса данных о постах
   useEffect(() => {
-    // Используем функцию fetch для выполнения HTTP-запроса
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((response) => response.json()) // Преобразуем ответ в формат JSON
-      .then((data) => {
+    // Выполняем HTTP-запрос с использованием Axios
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => {
+        const data = response.data; // Получаем данные из ответа
         setPosts(data); // Обновляем состояние данных о постах
         setLoading(false); // Устанавливаем состояние загрузки как завершенное
       })

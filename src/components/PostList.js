@@ -5,7 +5,7 @@ import usePostList from "../app/hooks/usePostList";
 
 function PostList() {
   // Используем custom hook для получения данных
-  const { posts, loadingMore, bottomOfListRef } = usePostList();
+  const { posts, loading, bottomOfListRef } = usePostList();
 
   return (
     <div className={styles.container}>
@@ -24,7 +24,7 @@ function PostList() {
         ))}
       </ul>
 
-      {loadingMore && (
+      {loading && (
         <div>
           <div className={styles.preloader}></div>
         </div>
