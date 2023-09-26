@@ -8,7 +8,11 @@ function PostDetail() {
   const { data: posts, isLoading, isError } = useGetPostsQuery();
 
   if (isLoading) {
-    return <div>Загрузка...</div>;
+    return (
+      <div>
+        <div className={styles.preloader}></div>
+      </div>
+    );
   }
 
   if (isError) {

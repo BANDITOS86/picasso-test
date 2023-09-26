@@ -37,9 +37,9 @@ function PostList() {
                 setLoadingMore(false);
               })
               .catch((error) => {
-                alert('"Произошла ошибка при загрузке данных:", error');
                 console.error("Произошла ошибка при загрузке данных:", error);
                 setLoadingMore(false);
+                alert('"Произошла ошибка при загрузке данных:"', error);
               });
           }
         }
@@ -77,7 +77,11 @@ function PostList() {
         ))}
       </ul>
 
-      {loadingMore && <div>Загрузка...</div>}
+      {loadingMore && (
+        <div>
+          <div className={styles.preloader}></div>
+        </div>
+      )}
       <div ref={bottomOfListRef}></div>
     </div>
   );
