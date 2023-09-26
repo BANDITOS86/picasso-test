@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/picasso-test/static/css/main.0e9c522e.css",
-    "main.js": "/picasso-test/static/js/main.524e0635.js",
+    "main.js": "/picasso-test/static/js/main.a33bb867.js",
     "static/js/787.a15edd5a.chunk.js": "/picasso-test/static/js/787.a15edd5a.chunk.js",
     "static/media/OpenSans-SemiBold.woff2": "/picasso-test/static/media/OpenSans-SemiBold.117298bec81d6c8250df.woff2",
     "static/media/OpenSans-Regular.woff2": "/picasso-test/static/media/OpenSans-Regular.9ffed65db527232e9a9d.woff2",
     "index.html": "/picasso-test/index.html",
     "main.0e9c522e.css.map": "/picasso-test/static/css/main.0e9c522e.css.map",
-    "main.524e0635.js.map": "/picasso-test/static/js/main.524e0635.js.map",
+    "main.a33bb867.js.map": "/picasso-test/static/js/main.a33bb867.js.map",
     "787.a15edd5a.chunk.js.map": "/picasso-test/static/js/787.a15edd5a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.0e9c522e.css",
-    "static/js/main.524e0635.js"
+    "static/js/main.a33bb867.js"
   ]
 }
